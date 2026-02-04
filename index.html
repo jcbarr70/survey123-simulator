@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Survey123 Simulator</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #f6dce6;
+  padding: 20px;
+}
+
+.box {
+  background: white;
+  padding: 20px;
+  width: 300px;
+  border-radius: 6px;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input, select {
+  width: 100%;
+  padding: 5px;
+}
+
+.result {
+  margin-top: 15px;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<h3>SIMULATOR</h3>
+
+<div class="box">
+
+<label>Enter your Age:</label>
+<input id="age" type="number" value="21">
+
+<label>Select Country:</label>
+<select id="country">
+  <option value="USA">USA</option>
+  <option value="Spain">Spain</option>
+  <option value="Mexico">Mexico</option>
+</select>
+
+<div class="result">
+Eligibility: <span id="output"></span>
+</div>
+
+</div>
+
+<script>
+
+function calculate() {
+
+  const age = Number(document.getElementById("age").value);
+  const country = document.getElementById("country").value;
+
+  // This simulates:
+  // if(${age} >= 18 and ${country} = "USA", "Eligible", "Not Eligible")
+
+  let result =
+    (age >= 18 && country === "USA")
+    ? "Eligible"
+    : "Not Eligible";
+
+  document.getElementById("output").innerText = result;
+}
+
+// Run when inputs change
+document.getElementById("age").addEventListener("input", calculate);
+document.getElementById("country").addEventListener("change", calculate);
+
+// Run on load
+calculate();
+
+</script>
+
+</body>
+</html>
