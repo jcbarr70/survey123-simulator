@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Survey123 Age Expression Simulator</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #f7f1e9;
+  padding: 20px;
+}
+
+.box {
+  background: white;
+  padding: 20px;
+  width: 340px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input {
+  width: 100%;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.result {
+  margin-top: 20px;
+  padding: 12px;
+  font-weight: bold;
+  background: #f4f4f4;
+  border-radius: 4px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<label>Birth Date:</label>
+<input id="birthDate" type="date" value="1998-01-01">
+
+<div class="result">
+Calculated Age: <span id="output"></span>
+</div>
+
+</div>
+
+<script>
+function calculateAge() {
+
+  const birthDateValue = document.getElementById("birthDate").value;
+  if (!birthDateValue) return;
+
+  const today = new Date();
+  const birthDate = new Date(birthDateValue);
+
+  // Survey123 equivalent:
+  // int((decimal-date-time(today()) - decimal-date-time(${birth_date})) div 365.25)
+
+  const millisecondsPerDay = 1000 * 60 * 60 * 24;
+
+  const age =
+    Math.floor(
+      ((today.getTime() - birthDate.getTime()) / millisecondsPerDay) / 365.25
+    );
+
+  document.getElementById("output").innerText = age;
+}
+
+// Run when date changes
+document.getElementById("birthDate").addEventListener("change", calculateAge);
+
+// Run on load
+calculateAge();
+</script>
+
+</body>
+</html>
