@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Survey123 Beaufort Scale Simulator</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #eef4f8;
+  padding: 20px;
+}
+
+.box {
+  background: white;
+  padding: 20px;
+  width: 340px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input {
+  width: 100%;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.result {
+  margin-top: 20px;
+  padding: 12px;
+  font-weight: bold;
+  background: #f4f4f4;
+  border-radius: 4px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<label>Wind Speed (mph):</label>
+<input id="wind" type="number" step="0.1" value="2">
+
+<div class="result">
+Beaufort Classification: <span id="output"></span>
+</div>
+
+</div>
+
+<script>
+function classifyWind() {
+
+  const wind_mph = Number(document.getElementById("wind").value);
+  let result;
+
+  // Survey123 equivalent:
+  // if(${wind_mph} < 1, "Calm",
+  //   if(${wind_mph} < 4, "Light air",
+  //     if(${wind_mph} < 8, "Light breeze",
+  //       if(${wind_mph} < 13, "Gentle breeze", "Strong"))))
+
+  if (wind_mph < 1) {
+    result = "Calm";
+  } else if (wind_mph < 4) {
+    result = "Light air";
+  } else if (wind_mph < 8) {
+    result = "Light breeze";
+  } else if (wind_mph < 13) {
+    result = "Gentle breeze";
+  } else {
+    result = "Strong";
+  }
+
+  document.getElementById("output").innerText = result;
+}
+
+// Run when input changes
+document.getElementById("wind").addEventListener("input", classifyWind);
+
+// Run on load
+classifyWind();
+</script>
+
+</body>
+</html>
