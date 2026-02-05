@@ -64,9 +64,9 @@ function combineText() {
   const State_name = document.getElementById("state").value;
 
   // Survey123 equivalent:
-  // concat(${county_name}, " ", ${State_name})
+  // concat(${county_name}, " ,", ${State_name})
 
-  const result = county_name + " " + State_name;
+  const result = county_name + ", " + State_name;
 
   document.getElementById("output").innerText = result.trim();
 }
