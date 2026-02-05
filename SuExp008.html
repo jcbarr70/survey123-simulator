@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Survey123 Breeding Evidence Constraint Simulator</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #f3f6f9;
+  padding: 20px;
+}
+
+.box {
+  background: white;
+  padding: 20px;
+  width: 380px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+label {
+  display: block;
+  margin-top: 12px;
+}
+
+select {
+  width: 100%;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.result {
+  margin-top: 20px;
+  padding: 12px;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.allowed {
+  background: #e6f4ea;
+  color: #1e7f43;
+}
+
+.not-allowed {
+  background: #fdecea;
+  color: #b42318;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<label>Breeding Code:</label>
+<select id="breeding_code">
+  <option value="none">None</option>
+  <option value="pair">Pair observed</option>
+  <option value="nest">Nest observed</option>
+  <option value="nest_with_eggs">Nest with eggs</option>
+</select>
+
+<label>Age Class:</label>
+<select id="age_class">
+  <option value="adult">Adult</option>
+  <option value="juvenile">Juvenile</option>
+</select>
+
+<div id="result" class="result"></div>
+
+</div>
+
+<script>
+function checkConsistency() {
+
+  const breeding_code = document.getElementById("breeding_code").value;
+  const age_class = document.getElementById("age_class").value;
+
+  // Survey123 equivalent:
+  // not(${breeding_code} = "nest_with_eggs" and ${age_class} = "juvenile")
+
+  const isAllowed = !(
+    breeding_code === "nest_with_eggs" &&
+    age_class === "juvenile"
+  );
+
+  const resultDiv = document.getElementById("result");
+
+  if (isAllowed) {
+    resultDiv.className = "result allowed";
+    resultDiv.innerText = "✔ Selection allowed (constraint = true)";
+  } else {
+    resultDiv.className = "result not-allowed";
+    resultDiv.innerText =
+      "✖ Not allowed: Juvenile age class is not compatible with ‘nest with eggs.’ Please review your selection.";
+  }
+}
+
+// Run when inputs change
+document.getElementById("breeding_code").addEventListener("change", checkConsistency);
+document.getElementById("age_class").addEventListener("change", checkConsistency);
+
+// Run on load
+checkConsistency();
+</script>
+
+</body>
+</html>
