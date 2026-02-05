@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Survey123 Density Calculator Simulator</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #f2f6f1;
+  padding: 20px;
+}
+
+.box {
+  background: white;
+  padding: 20px;
+  width: 360px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input {
+  width: 100%;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.result {
+  margin-top: 20px;
+  padding: 12px;
+  font-weight: bold;
+  background: #f4f4f4;
+  border-radius: 4px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<label>Animal Count:</label>
+<input id="count" type="number" value="12">
+
+<label>Plot Area (hectares):</label>
+<input id="area" type="number" step="0.01" value="2.5">
+
+<div class="result">
+Animals per Hectare: <span id="output"></span>
+</div>
+
+</div>
+
+<script>
+function calculateDensity() {
+
+  const count = Number(document.getElementById("count").value);
+  const plot_area_ha = Number(document.getElementById("area").value);
+
+  if (plot_area_ha <= 0) {
+    document.getElementById("output").innerText = "Invalid area";
+    return;
+  }
+
+  // Survey123 equivalent:
+  // round((${count} / ${plot_area_ha}), 2)
+
+  const density = Math.round((count / plot_area_ha) * 100) / 100;
+
+  document.getElementById("output").innerText = density.toFixed(2);
+}
+
+// Run when inputs change
+document.getElementById("count").addEventListener("input", calculateDensity);
+document.getElementById("area").addEventListener("input", calculateDensity);
+
+// Run on load
+calculateDensity();
+</script>
+
+</body>
+</html>
