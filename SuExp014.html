@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Bird Code Simulator</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #f7f1e9;
+  padding: 20px;
+}
+
+.box {
+  background: white;
+  padding: 20px;
+  width: 340px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+select {
+  width: 70%;
+  padding: 6px;
+}
+
+.result {
+  margin-top: 20px;
+  padding: 12px;
+  font-weight: bold;
+  background: #f4f4f4;
+  border-radius: 4px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<label>Select Bird Species:</label>
+<select id="birdSpecies">
+  <option value="">-- Choose species --</option>
+  <option value="Least Tern">Least Tern</option>
+  <option value="Snowy Plover">Snowy Plover</option>
+  <option value="Wilsons Plover">Wilsons Plover</option>
+</select>
+
+<div class="result">
+Bird Code: <span id="output"></span>
+</div>
+
+</div>
+
+<script>
+
+function calculateCode() {
+
+  const species = document.getElementById("birdSpecies").value;
+  let code = "";
+
+  // Simulates:
+  // if(selected(${birdSpecies},'Least Tern'),'-LE-',
+  //    if(selected(${birdSpecies},'Snowy Plover'),'-SN-',
+  //       if(selected(${birdSpecies},'Wilsons Plover'),'-WI-','')))
+
+  if (species === "Least Tern") {
+    code = "-LE-";
+  } else if (species === "Snowy Plover") {
+    code = "-SN-";
+  } else if (species === "Wilsons Plover") {
+    code = "-WI-";
+  } else {
+    code = "";
+  }
+
+  document.getElementById("output").innerText = code;
+}
+
+// Run when selection changes
+document.getElementById("birdSpecies").addEventListener("change", calculateCode);
+
+// Run on load
+calculateCode();
+
+</script>
+
+</body>
+</html>
