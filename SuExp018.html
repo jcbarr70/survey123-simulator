@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Survey123 format-date('%m') Simulator</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #eef4f8;
+  padding: 20px;
+}
+
+.box {
+  background: white;
+  padding: 20px;
+  width: 420px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.helper {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #666;
+}
+
+.result {
+  margin-top: 20px;
+  padding: 14px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.label {
+  color: #444;
+  font-size: 13px;
+}
+
+.expr {
+  display: block;
+  font-family: Consolas, monospace;
+  font-size: 12px;
+  color: #6b6b6b;
+}
+
+.value-text {
+  color: #0066cc; /* blue = text */
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.value-number {
+  color: #1a7f37; /* green = number */
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.divider {
+  height: 1px;
+  background: #ddd;
+  margin: 12px 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+  <label for="dateInput">Select a date:</label>
+  <input id="dateInput" type="date" value="2025-03-15">
+
+  <div class="helper">
+    Input value is always <strong>YYYY-MM-DD</strong> (browser display may differ)
+  </div>
+
+  <div class="result">
+
+    <div class="result-row">
+      <div class="label">
+        Text output (leading zero)
+        <span class="expr">format-date(${mydateq}, '%m')</span>
+      </div>
+      <div class="value-text" id="monthText">--</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="result-row">
+      <div class="label">
+        Number output (no leading zero)
+        <span class="expr">number(format-date(${mydateq}, '%m'))</span>
+      </div>
+      <div class="value-number" id="monthNumber">--</div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function simulateFormatDate() {
+  const dateValue = document.getElementById("dateInput").value;
+
+  if (!dateValue) {
+    document.getElementById("monthText").textContent = "--";
+    document.getElementById("monthNumber").textContent = "--";
+    return;
+  }
+
+  // Survey123-style parsing (no timezone conversion)
+  const parts = dateValue.split("-");
+  const monthText = parts[1];            // "03"
+  const monthNumber = Number(parts[1]);  // 3
+
+  document.getElementById("monthText").textContent = monthText;
+  document.getElementById("monthNumber").textContent = monthNumber;
+}
+
+// Run when date changes
+document.getElementById("dateInput").addEventListener("change", simulateFormatDate);
+
+// Run on load
+simulateFormatDate();
+</script>
+
+</body>
+</html>
