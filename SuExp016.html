@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Survey123 format-date('%m') Simulator</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #eef4f8;
+  padding: 20px;
+}
+
+.box {
+  background: white;
+  padding: 20px;
+  width: 360px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input {
+  width: 100%;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.result {
+  margin-top: 20px;
+  padding: 12px;
+  background: #f4f4f4;
+  border-radius: 4px;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<label>Select a date:</label>
+<input id="dateInput" type="date" value="2025-03-15">
+
+<div class="result">
+format-date(date, '%m') → <span id="monthText"></span><br>
+number(format-date(date, '%m')) → <span id="monthNumber"></span>
+</div>
+
+</div>
+
+<script>
+function simulateFormatDate() {
+  const dateValue = document.getElementById("dateInput").value;
+
+  if (!dateValue) {
+    document.getElementById("monthText").innerText = "-";
+    document.getElementById("monthNumber").innerText = "-";
+    return;
+  }
+
+  const date = new Date(dateValue);
+
+  // Simulate format-date(${date}, '%m')
+  const monthTwoDigits = String(date.getMonth() + 1).padStart(2, '0');
+
+  // Simulate number(format-date(...))
+  const monthAsNumber = Number(monthTwoDigits);
+
+  document.getElementById("monthText").innerText = monthTwoDigits;
+  document.getElementById("monthNumber").innerText = monthAsNumber;
+}
+
+// Run on change
+document.getElementById("dateInput").addEventListener("change", simulateFormatDate);
+
+// Run on load
+simulateFormatDate();
+</script>
+
+</body>
+</html>
