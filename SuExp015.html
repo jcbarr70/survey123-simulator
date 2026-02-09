@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Survey123 Average Simulator</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #eef4f8;
+  padding: 20px;
+}
+
+.box {
+  background: white;
+  padding: 20px;
+  width: 340px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input {
+  width: 100%;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.note {
+  font-size: 0.9em;
+  color: #555;
+  margin-top: 5px;
+}
+
+.result {
+  margin-top: 20px;
+  padding: 12px;
+  font-weight: bold;
+  background: #f4f4f4;
+  border-radius: 4px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<label>Value 1:</label>
+<input id="v1" type="number" step="0.1" value="5">
+
+<label>Value 2:</label>
+<input id="v2" type="number" step="0.1" value="0">
+
+<label>Value 3:</label>
+<input id="v3" type="number" step="0.1" value="8">
+
+<div class="note">*All values are required for the calculation.</div>
+
+<div class="result">
+Average (divided by 3): <span id="output"></span>
+</div>
+
+</div>
+
+<script>
+function calculateAverage() {
+  const v1 = Number(document.getElementById("v1").value);
+  const v2 = Number(document.getElementById("v2").value);
+  const v3 = Number(document.getElementById("v3").value);
+
+  // Fixed formula: always divide by 3
+  const average = (v1 + v2 + v3) / 3;
+
+  document.getElementById("output").innerText = average.toFixed(2);
+}
+
+// Run when any input changes
+document.getElementById("v1").addEventListener("input", calculateAverage);
+document.getElementById("v2").addEventListener("input", calculateAverage);
+document.getElementById("v3").addEventListener("input", calculateAverage);
+
+// Run on load
+calculateAverage();
+</script>
+
+</body>
+</html>
