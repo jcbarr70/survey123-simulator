@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Age Classification Simulator</title>
+<title>Dissolved Oxygen Classification Simulator</title>
 
 <style>
 body {
@@ -14,7 +14,7 @@ body {
 .box {
   background: white;
   padding: 20px;
-  width: 320px;
+  width: 340px;
   border-radius: 6px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
@@ -45,11 +45,11 @@ input {
 
 <div class="box">
 
-<label>Enter Age:</label>
-<input id="age" type="number" value="25">
+<label>Enter Dissolved Oxygen (mg/L):</label>
+<input id="do_mgL" type="number" step="0.1" placeholder="e.g. 6.5">
 
 <div class="result">
-Category: <span id="output"></span>
+Water Quality: <span id="output"></span>
 </div>
 
 </div>
@@ -58,30 +58,36 @@ Category: <span id="output"></span>
 
 function calculate() {
 
-  const age = Number(document.getElementById("age").value);
-
-  // This simulates:
-  // if(${age} < 13, "Child",
-  //    if(${age} < 20, "Teen",
-  //       if(${age} < 65, "Adult", "Senior")))
-
+  const input = document.getElementById("do_mgL").value;
   let result;
 
-  if (age < 13) {
-    result = "Child";
-  } else if (age < 20) {
-    result = "Teen";
-  } else if (age < 65) {
-    result = "Adult";
+  // Simulates:
+  // if(string(${do_mgL}) = "", "TBD",
+  //    if(${do_mgL} < 3, "Poor",
+  //       if(${do_mgL} < 5, "Fair",
+  //          if(${do_mgL} < 7, "Good", "Excellent"))))
+
+  if (input === "") {
+    result = "TBD";
   } else {
-    result = "Senior";
+    const doValue = Number(input);
+
+    if (doValue < 3) {
+      result = "Poor";
+    } else if (doValue < 5) {
+      result = "Fair";
+    } else if (doValue < 7) {
+      result = "Good";
+    } else {
+      result = "Excellent";
+    }
   }
 
   document.getElementById("output").innerText = result;
 }
 
 // Run when input changes
-document.getElementById("age").addEventListener("input", calculate);
+document.getElementById("do_mgL").addEventListener("input", calculate);
 
 // Run on load
 calculate();
