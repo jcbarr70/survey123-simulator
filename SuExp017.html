@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Survey123 selected() Expression Simulator</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #eef4f8;
+  padding: 20px;
+}
+
+.box {
+  background: white;
+  padding: 20px;
+  width: 420px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+label {
+  display: block;
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+select, input {
+  width: 100%;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.hidden {
+  display: none;
+}
+
+.result {
+  margin-top: 20px;
+  padding: 12px;
+  background: #f4f4f4;
+  border-radius: 4px;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<label>Vegetation Structure:</label>
+<select id="vegStructure">
+  <option value="">-- Select --</option>
+  <option value="Forest">Forest</option>
+  <option value="Shrubland">Shrubland</option>
+  <option value="Grassland">Grassland</option>
+  <option value="OtherVegStructure">Other</option>
+</select>
+
+<div id="otherBlock" class="hidden">
+  <label>Please specify (Other):</label>
+  <input id="Other_vegStructure" type="text" placeholder="Enter other vegetation type">
+</div>
+
+<div class="result">
+Calculated value: <span id="output">—</span>
+</div>
+
+</div>
+
+<script>
+function evaluateExpression() {
+  const vegStructure = document.getElementById("vegStructure").value;
+  const otherVeg = document.getElementById("Other_vegStructure").value;
+
+  // Show/hide "Other" text input
+  const isOther = vegStructure === "OtherVegStructure";
+  document.getElementById("otherBlock").classList.toggle("hidden", !isOther);
+
+  // Survey123 equivalent:
+  // if(selected(${vegStructure}, 'OtherVegStructure'),
+  //    ${Other_vegStructure},
+  //    ${vegStructure})
+
+  let result;
+  if (isOther) {
+    result = otherVeg || "(waiting for input)";
+  } else {
+    result = vegStructure || "(none selected)";
+  }
+
+  document.getElementById("output").innerText = result;
+}
+
+document.getElementById("vegStructure").addEventListener("change", evaluateExpression);
+document.getElementById("Other_vegStructure").addEventListener("input", evaluateExpression);
+
+// Initialize
+evaluateExpression();
+</script>
+
+</body>
+</html>
