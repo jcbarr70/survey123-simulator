@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Survey123 +60 Day Date Simulator</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #eef4f8;
+  padding: 20px;
+}
+
+.box {
+  background: white;
+  padding: 20px;
+  width: 360px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+}
+
+input {
+  width: 100%;
+  padding: 6px;
+}
+
+.result {
+  margin-top: 20px;
+  padding: 12px;
+  background: #f4f4f4;
+  border-radius: 4px;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<label>Select Nesting Date:</label>
+<input type="date" id="nestingDate">
+
+<div class="result">
+Calculated Date (+60 days): <span id="output">TBD</span>
+</div>
+
+</div>
+
+<script>
+function formatSurvey123Style(dateObj) {
+  const months = ["Jan.", "Feb.", "Mar.", "Apr.", "May.", "Jun.",
+                  "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec."];
+  
+  const month = months[dateObj.getMonth()];
+  const day = dateObj.getDate();
+  const year = dateObj.getFullYear();
+  
+  return `${month} ${day}, ${year}`;
+}
+
+function calculateDate() {
+  const dateInput = document.getElementById("nestingDate").value;
+  const output = document.getElementById("output");
+
+  // Equivalent to: string-length(${nesting_date}) = 0
+  if (!dateInput) {
+    output.textContent = "TBD";
+    return;
+  }
+
+  // Equivalent to decimal-date-time(${nesting_date})
+  const selectedDate = new Date(dateInput);
+  selectedDate.setHours(0,0,0,0);
+
+  // + 60 days
+  selectedDate.setDate(selectedDate.getDate() + 60);
+
+  // Equivalent to format-date(..., '%b. %e, %Y')
+  output.textContent = formatSurvey123Style(selectedDate);
+}
+
+document.getElementById("nestingDate").addEventListener("change", calculateDate);
+
+// Initialize on load
+calculateDate();
+</script>
+
+</body>
+</html>
